@@ -1,0 +1,489 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<openerp>
+    <data>
+       <record id="buxis_claim_view" model="ir.ui.view">
+            <field name="name">buxis.crm.claim.form</field>
+            <field name="model">crm.claim</field>
+            <field name="inherit_id" ref="crm_claim.crm_case_claims_form_view"/>
+            <field name="arch" type="xml">
+                 <xpath expr="//group[1]" position="replace"/>
+                 <xpath expr="//group[1]" position="replace"/>
+                 <xpath expr="//group[1]" position="before">
+                     <group>
+                        <group>
+                            <field name="id" readonly="1"/>
+                            <field name="can_edit" invisible="1"/>
+                            <!--<field name="select_category_ids" invisible="1" />
+                            <field name="select_subcategory_ids" invisible="1" />-->
+                            <field name="categ_id" attrs="{'readonly':[('id','!=',False),('can_edit','=',False)]}" options="{'no_create': True}"/>
+                            <!--<field name="sub_categoria_id" domain="[('category_id','=',categ_id),('id','in',select_subcategory_ids[0][2])]" attrs="{'readonly':['|',('select_subcategory_ids','=',False),'&amp;',('id','!=',False),('can_edit','=',False)]}" options="{'no_create': True}"/>-->
+                            <!--<field name="campo_tipo_trabajo" invisible="1"/>
+                            <field name="tipo_trabajo_id" attrs="{'readonly':[('id','!=',False),('can_edit','=',False)],'invisible':[('campo_tipo_trabajo','=',False)], 'required':[('campo_tipo_trabajo','=',True)]}" options="{'no_create': True}"/>
+                            <field name="campo_severidad" invisible="1"/>
+                            <field name="severidad_id" attrs="{'readonly':[('id','!=',False),('can_edit','=',False)],'invisible':[('campo_severidad','=',False)], 'required':[('campo_severidad','=',True)]}" options="{'no_create': True}"/>-->
+                            <field name="name" attrs="{'readonly':[('id','!=',False),('can_edit','=',False)]}"/>
+                            <field name="date" attrs="{'readonly':[('id','!=',False),('can_edit','=',False)]}"/>
+                            <field name="priority" attrs="{'readonly':[('id','!=',False),('can_edit','=',False)]}"/>
+                        </group>
+                         <group>
+                             <field name="create_date" invisible="1"/>
+                             <field name="select_team_ids" invisible="1"/>
+                             <!-- <field name="select_teams_cnt" invisible="1"/> -->
+                             <field name="team_id" string="Equipo de atención" options="{'no_create':True, 'no_open': True}"  attrs="{'readonly':['&amp;',('id','!=',False),('can_edit','=',False)]}"/>
+                             <!--<field name="select_user_ids" invisible="1"/>
+                             <field name="select_users_cnt" invisible="1"/>-->
+                             <field name="user_id" options="{'no_create':True, 'no_open': True}" domain="[('id','in',select_user_ids[0][2])]" attrs="{'readonly':['|',('team_id','=',False),'&amp;',('id','!=',False),('can_edit','=',False)]}"/>
+                         </group>
+                     </group>
+                 </xpath>
+                <xpath expr="//field[@name='stage_id']" position="attributes">
+                    <attribute name="attrs">{'readonly':[('id','!=',False),('can_edit','=',False)]}</attribute>
+                    <attribute name="domain">['|', ('team_ids', '=', team_id), ('case_default', '=', True)]</attribute>
+                 </xpath>
+                <xpath expr="//field[@name='date_action_next']" position="attributes">
+                    <attribute name="attrs">{'readonly':[('id','!=',False),('can_edit','=',False)]}</attribute>
+                 </xpath>
+                <xpath expr="//field[@name='action_next']" position="attributes">
+                    <attribute name="attrs">{'readonly':[('id','!=',False),('can_edit','=',False)]}</attribute>
+                 </xpath>
+                <xpath expr="//field[@name='cause']" position="attributes">
+                    <attribute name="attrs">{'readonly':[('id','!=',False),('can_edit','=',False)]}</attribute>
+                 </xpath>
+                <xpath expr="//field[@name='type_action']" position="attributes">
+                    <attribute name="attrs">{'readonly':[('id','!=',False),('can_edit','=',False)]}</attribute>
+                 </xpath>
+                <xpath expr="//field[@name='resolution']" position="attributes">
+                    <attribute name="attrs">{'readonly':[('id','!=',False),('can_edit','=',False)]}</attribute>
+                 </xpath>
+
+                 <xpath expr="//page[1]" position="replace">
+                    <page string="Caso">
+                        <group>
+                            <group string="Solicitante">
+                                <field name="partner_id" string="Contacto" on_change="onchange_partner_id(partner_id)" options="{'no_create': True}" attrs="{'readonly':[('id','!=',False),('can_edit','=',False)]}"/>
+                                <field name="partner_parent_id" readonly="1" attrs="{'invisible':[('partner_parent_id','=',False)]}"/>
+                                <field name="partner_mobile" readonly="1"/>
+                                <field name="email_from" readonly="1"/>
+                            </group>
+                            <group string="Clasificación">
+                                <field name="forma_contacto_id" options="{'no_create': True}" attrs="{'readonly':[('id','!=',False),('can_edit','=',False)]}"/>
+                                <field name="tag_ids" widget="many2many_tags" options="{'no_create_edit': True}" attrs="{'readonly':[('id','!=',False),('can_edit','=',False)]}"/>
+                            </group>
+                        </group>
+                        <group string="Descripción">
+                            <field name="description" nolabel="1" attrs="{'readonly':[('id','!=',False),('can_edit','=',False)]}"/>
+                        </group>
+
+
+                    </page>
+                 </xpath>
+                 <xpath expr="//field[@name='write_date']" position="after">
+                        <field name="fecha_cierre" attrs="{'readonly':[('id','!=',False),('can_edit','=',False)]}"/>
+                        <field name="tiempo_efectivo" readonly="1" widget="float_time"/>
+                 </xpath>
+                 <xpath expr="//page[2]/group[2]" position="attributes">
+                    <attribute name="groups"></attribute>
+                 </xpath>
+                 <xpath expr="//page[last()]" position="after">
+                     <page name="time" string="Esfuerzo">
+                         <field name="time_ids" nolabel="1" context="{'default_claim_id': active_id}" attrs="{'readonly':[('can_edit','=',False)]}">
+                             <tree editable="bottom">
+                                 <field name="claim_id" invisible="1"/>
+                                 <field name="can_edit_time" invisible="1"/>
+                                 <field name="date" attrs="{'readonly':[('can_edit_time','=',False)]}"/>
+                                 <field name="user_id" options="{'no_create': True}" attrs="{'readonly':[('can_edit_time','=',False)]}"/>
+                                 <field name="team_id" options="{'no_create': True}" readonly="1"/>
+                                 <field name="time" sum="Total" attrs="{'readonly':[('can_edit_time','=',False)]}" widget="float_time"/>
+                                 <field name="notes" attrs="{'readonly':[('can_edit_time','=',False)]}"/>
+                             </tree>
+
+                         </field>
+                     </page>
+                 </xpath>
+            </field>
+        </record>
+
+       <record id="make_invisible" model="res.groups">
+            <field name="name">Invisible</field>
+         </record>
+
+       <record model="ir.ui.menu" id="sales_team.menu_sales_team_act">
+            <field name="groups_id" eval="[(6,0,[ref('make_invisible')])]"/>
+        </record>
+
+       <record model="ir.ui.view" id="crm_claim_tree_prioridad">
+            <field name="name">CRM - Claims Tree</field>
+            <field name="model">crm.claim</field>
+            <field name="inherit_id" ref="crm_claim.crm_case_claims_tree_view"/>
+            <field name="arch" type="xml">
+                <tree position="attributes">
+                    <attribute name="colors">red:priority=='2'</attribute>
+                </tree>
+                <field name="name" position="before">
+                    <field name="team_id"/>
+                </field>
+                <field name="action_next" position="after">
+                    <field name="priority"/>
+                    <field name="tiempo_efectivo" widget="float_time"/>
+                </field>
+            </field>
+        </record>
+
+       <record id="cedula_search" model="ir.ui.view">
+            <field name="name">CRM - Claims Search</field>
+            <field name="model">crm.claim</field>
+            <field name="inherit_id" ref="crm_claim.view_crm_case_claims_filter"/>
+            <field name="arch" type="xml">
+                <xpath expr="//filter[1]" position="before">
+                    <filter string="Activos" name="reclamos_activos" domain="[[u'stage_id', u'!=', 3]]" help="Consultas/Reclamos no finalizados"/>
+                </xpath>
+                <field name="user_id" position="after">
+                    <field name="id"/>
+                    <field name="nro_doc_contacto"/>
+                    <field name="team_id"/>
+                    <field name="stage_id"/>
+                </field>
+            </field>
+        </record>
+
+       <record id="buxis_claim_clientes_view" model="ir.ui.view">
+           <field name="name">buxis.crm.claim.clientes.form</field>
+           <field name="model">crm.claim</field>
+           <field name="mode">primary</field>
+           <!--<field name="inherit_id" ref="buxis_claim_view"/>-->
+           <field name="inherit_id" ref="crm_claim.crm_case_claims_form_view"/>
+           <field name="arch" type="xml">
+                <xpath expr="//field[@name='team_id']" position="attributes">
+                    <attribute name="attrs">{'readonly':True}</attribute>
+                 </xpath>
+
+                <xpath expr="//field[@name='user_id']" position="attributes">
+                    <attribute name="attrs">{'readonly':True}</attribute>
+                 </xpath>
+
+               <xpath expr="//page[last()]" position="replace">
+               </xpath>
+
+<!--                 <xpath expr="//group[1]" position="replace"/>
+                 <xpath expr="//group[1]" position="replace"/>
+                 <xpath expr="//group[1]" position="before">
+                     <group>
+                        <group>
+                            <field name="id" readonly="1"/>
+                            <field name="can_edit" invisible="1"/>
+                            <field name="select_category_ids" invisible="1" />
+                            <field name="select_subcategory_ids" invisible="1" />
+                            <field name="categ_id" attrs="{'readonly':['|',('select_category_ids','=',False),'&amp;',('id','!=',False),('can_edit','=',False)]}" domain="[('id','in',select_category_ids[0][2])]" options="{'no_create': True}"/>
+                            <field name="campo_tipo_trabajo" invisible="1"/>
+                            <field name="tipo_trabajo_id" attrs="{'readonly':[('id','!=',False),('can_edit','=',False)],'invisible':[('campo_tipo_trabajo','=',False)], 'required':[('campo_tipo_trabajo','=',True)]}" options="{'no_create': True}"/>
+                            <field name="campo_severidad" invisible="1"/>
+                            <field name="severidad_id" attrs="{'readonly':[('id','!=',False),('can_edit','=',False)],'invisible':[('campo_severidad','=',False)], 'required':[('campo_severidad','=',True)]}" options="{'no_create': True}"/>
+                            <field name="name" attrs="{'readonly':[('id','!=',False),('can_edit','=',False)]}"/>
+                            <field name="date" attrs="{'readonly':[('id','!=',False),('can_edit','=',False)]}"/>
+                            <field name="priority" attrs="{'readonly':[('id','!=',False),('can_edit','=',False)]}"/>
+                        </group>
+                         <group>
+                             <field name="create_date" invisible="1"/>
+                             <field name="select_team_ids" invisible="1"/>
+                             <field name="team_id" string="Equipo de atención" domain="[('id','in',select_team_ids[0][2])]" options="{'no_create':True, 'no_open': True}"  attrs="{'readonly':['&amp;',('id','!=',False),('can_edit','=',False)]}"/>
+                             <field name="select_user_ids" invisible="1"/>
+                             <field name="select_users_cnt" invisible="1"/>
+                             <field name="user_id" options="{'no_create':True, 'no_open': True}" domain="[('id','in',select_user_ids[0][2])]" attrs="{'readonly':['|',('team_id','=',False),'&amp;',('id','!=',False),('can_edit','=',False)]}"/>
+                         </group>
+                     </group>
+                 </xpath>
+                <xpath expr="//field[@name='stage_id']" position="attributes">
+                    <attribute name="attrs">{'readonly':[('id','!=',False),('can_edit','=',False)]}</attribute>
+                    <attribute name="domain">['|', ('team_ids', '=', team_id), ('case_default', '=', True)]</attribute>
+                 </xpath>
+                <xpath expr="//field[@name='date_action_next']" position="attributes">
+                    <attribute name="attrs">{'readonly':[('id','!=',False),('can_edit','=',False)]}</attribute>
+                 </xpath>
+                <xpath expr="//field[@name='action_next']" position="attributes">
+                    <attribute name="attrs">{'readonly':[('id','!=',False),('can_edit','=',False)]}</attribute>
+                 </xpath>
+                <xpath expr="//field[@name='cause']" position="attributes">
+                    <attribute name="attrs">{'readonly':[('id','!=',False),('can_edit','=',False)]}</attribute>
+                 </xpath>
+                <xpath expr="//field[@name='type_action']" position="attributes">
+                    <attribute name="attrs">{'readonly':[('id','!=',False),('can_edit','=',False)]}</attribute>
+                 </xpath>
+                <xpath expr="//field[@name='resolution']" position="attributes">
+                    <attribute name="attrs">{'readonly':[('id','!=',False),('can_edit','=',False)]}</attribute>
+                 </xpath>
+
+                 <xpath expr="//page[1]" position="replace">
+                    <page string="Caso">
+                        <group>
+                            <group string="Solicitante">
+                                <field name="partner_id" string="Contacto" on_change="onchange_partner_id(partner_id)" options="{'no_create': True}" attrs="{'readonly':[('id','!=',False),('can_edit','=',False)]}"/>
+                                <field name="tipo_doc_contacto" readonly="1"/>
+                                <field name="nro_doc_contacto" readonly="1"/>
+                                <field name="partner_phone" readonly="1"/>
+                                <field name="email_from" readonly="1"/>
+                            </group>
+                            <group string="Clasificación">
+                                <field name="forma_contacto_id" options="{'no_create': True}" attrs="{'readonly':[('id','!=',False),('can_edit','=',False)]}"/>
+                                <field name="tag_ids" widget="many2many_tags" options="{'no_create_edit': True}" attrs="{'readonly':[('id','!=',False),('can_edit','=',False)]}"/>
+                            </group>
+                        </group>
+                        <group string="Descripción">
+                            <field name="description" nolabel="1" attrs="{'readonly':[('id','!=',False),('can_edit','=',False)]}"/>
+                        </group>
+
+
+                    </page>
+                 </xpath>
+                 <xpath expr="//field[@name='write_date']" position="after">
+                        <field name="fecha_cierre" attrs="{'readonly':[('id','!=',False),('can_edit','=',False)]}"/>
+                        <field name="tiempo_efectivo" readonly="1" widget="float_time"/>
+                 </xpath>
+                 <xpath expr="//page[2]/group[2]" position="attributes">
+                    <attribute name="groups"></attribute>
+                 </xpath>
+                 <xpath expr="//page[last()]" position="after">
+                     <page name="time" string="Esfuerzo">
+                         <field name="time_ids" nolabel="1" context="{'default_claim_id': active_id}" attrs="{'readonly':[('can_edit','=',False)]}">
+                             <tree editable="bottom">
+                                 <field name="claim_id" invisible="1"/>
+                                 <field name="can_edit_time" invisible="1"/>
+                                 <field name="date" attrs="{'readonly':[('can_edit_time','=',False)]}"/>
+                                 <field name="user_id" options="{'no_create': True}" attrs="{'readonly':[('can_edit_time','=',False)]}"/>
+                                 <field name="team_id" options="{'no_create': True}" readonly="1"/>
+                                 <field name="time" sum="Total" attrs="{'readonly':[('can_edit_time','=',False)]}" widget="float_time"/>
+                                 <field name="notes" attrs="{'readonly':[('can_edit_time','=',False)]}"/>
+                             </tree>
+
+                         </field>
+                     </page>
+                 </xpath>-->
+            </field>
+        </record>
+
+<!--
+       <record id="buxis_ventas_view" model="ir.ui.view">
+            <field name="name">Opportunities</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm.crm_case_form_view_oppor"/>
+            <field name="arch" type="xml">
+                 <field name="team_id" position="replace">
+                    <field name="team_id" widget="selection" can_create="true" can_write="true" modifiers="{}" domain="[('tipo_equipo', '=', 'ventas')]" string="Equipo de Ventas" />
+                 </field>
+            </field>
+        </record>
+-->
+
+       <record model="ir.ui.view" id="crm_case_claims_graph_view">
+            <field name="name">CRM - Claims Graph</field>
+            <field name="model">crm.claim</field>
+            <field name="arch" type="xml">
+                <graph string="Claims">
+                    <field name="date" type="col"/>
+                    <field name="categ_id" type="row"/>
+
+                </graph>
+            </field>
+        </record>
+
+       <!-- Se elimina filtro automático estándar y se agrega contexto para aplicar filtro propio -->
+        <record model="ir.actions.act_window" id="crm_claim_category_claim_filtered">
+            <field name="name">Claims</field>
+            <field name="res_model">crm.claim</field>
+            <field name="view_mode">tree,calendar,form,pivot,graph</field>
+            <field name="view_id" ref="crm_claim.crm_case_claims_tree_view"/>
+            <field name="context">{"stage_type":"claim", "apply_team_filter": True, "search_default_reclamos_activos":1}</field>
+            <field name="search_view_id" ref="crm_claim.view_crm_case_claims_filter"/>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Record and track your customers' claims. Claims may be linked to a sales order or a lot.You can send emails with attachments and keep the full history for a claim (emails sent, intervention type and so on).Claims may automatically be linked to an email address using the mail gateway module.
+                </p>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window.view" id="crm_claim_buxis_tree">
+            <field name="sequence" eval="1"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="crm_claim.crm_case_claims_tree_view"/>
+            <field name="act_window_id" ref="crm_claim_category_claim_filtered"/>
+        </record>
+
+        <record model="ir.actions.act_window.view" id="crm_claim_form">
+            <field name="sequence" eval="2"/>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="buxis_claim_view"/>
+            <field name="act_window_id" ref="crm_claim_category_claim_filtered"/>
+        </record>
+
+        <menuitem name="Claims" id="crm_claim.menu_crm_case_claims"
+                  parent="base.menu_sales" action="crm_claim_category_claim_filtered" sequence="7"/>
+<!--
+        <record model="ir.actions.act_window" id="crm_claim_category_claim_clientes_filtered">
+            <field name="name">Claims</field>
+            <field name="res_model">crm.claim</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="crm_claim.crm_case_claims_tree_view"/>
+            <field name="context">{"stage_type":"claim", "apply_team_filter": True, "search_default_reclamos_activos":1, 'default_team_id': 2}</field>
+            <field name="search_view_id" ref="crm_claim.view_crm_case_claims_filter"/>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Record and track your customers' claims. Claims may be linked to a sales order or a lot.You can send emails with attachments and keep the full history for a claim (emails sent, intervention type and so on).Claims may automatically be linked to an email address using the mail gateway module.
+                </p>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window.view" id="crm_claim_clientes_tree">
+            <field name="sequence" eval="1"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="crm_claim.crm_case_claims_tree_view"/>
+            <field name="act_window_id" ref="crm_claim_category_claim_clientes_filtered"/>
+        </record>
+
+        <record model="ir.actions.act_window.view" id="crm_claim_clientes_form">
+            <field name="sequence" eval="2"/>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="buxis_claim_clientes_view"/>
+            <field name="act_window_id" ref="crm_claim_category_claim_clientes_filtered"/>
+        </record>
+
+        <menuitem name="Claims" id="crm_claim.menu_crm_case_clientes_claims"
+                  parent="base.menu_sales" action="crm_claim_category_claim_clientes_filtered" sequence="8"/>
+-->
+        <record id="action_crm_claim_tag" model="ir.actions.act_window">
+            <field name="name">Etiquetas</field>
+            <field name="res_model">crm.claim.tag</field>
+            <field name="view_mode">tree</field>
+        </record>
+
+        <record id="crm_claim_tag_tree" model="ir.ui.view">
+            <field name="name">crm.claim.tag.tree</field>
+            <field name="model">crm.claim.tag</field>
+            <field name="arch" type="xml">
+                <tree editable="bottom">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <menuitem name="Etiquetas" id="menu_crm_claim_tag"
+            parent="crm_claim.menu_config_claim" action="action_crm_claim_tag" sequence="25" groups="base.group_no_one"/>
+
+
+       <!-- Acomodar menues de reclamaciones -->
+       <menuitem id="base.menu_aftersale" name="After-Sale"
+            groups="base.group_no_one"
+            parent="base.menu_base_partner" sequence="5" />
+
+       <menuitem id="base.menu_services" name="Reclamaciones"
+            groups="base.group_sale_salesman"
+            parent="base.menu_sales" sequence="7" />
+
+        <record id="crm_claim_forma_contacto_tree" model="ir.ui.view">
+            <field name="name">crm.claim.forma_contacto.tree</field>
+            <field name="model">crm.claim.forma_contacto</field>
+            <field name="arch" type="xml">
+                <tree editable="bottom">
+                    <field name="code"/>
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="crm_claim_forma_contacto_action" model="ir.actions.act_window">
+            <field name="name">Formas contacto</field>
+            <field name="res_model">crm.claim.forma_contacto</field>
+            <field name="view_mode">tree</field>
+        </record>
+
+        <menuitem action="crm_claim_forma_contacto_action" name="Formas contacto"
+            id="menu_crm_case_claim_forma_contacto" parent="crm_claim.menu_config_claim" groups="base.group_no_one" sequence="50"/>
+
+        <record id="action_crm_claim_time" model="ir.actions.act_window">
+            <field name="name">Esfuerzo</field>
+            <field name="res_model">crm.claim.time</field>
+            <field name="view_mode">tree,pivot,graph</field>
+        </record>
+
+        <record id="crm_claim_time_tree" model="ir.ui.view">
+            <field name="name">crm.claim.time.tree</field>
+            <field name="model">crm.claim.time</field>
+            <field name="arch" type="xml">
+                <tree edit="false" create="false" delete="false">
+                    <field name="claim_id"/>
+                    <field name="user_id"/>
+                    <field name="date"/>
+                    <field name="time" widget="float_time"/>
+                    <field name="notes"/>
+                    <!--<field name="product_id"/>-->
+                    <field name="team_id"/>
+                    <field name="categ_id"/>
+                    <field name="partner_id"/>
+                    <field name="priority"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="crm_claim_time_pivot" model="ir.ui.view">
+            <field name="name">crm.claim.time.pivot</field>
+            <field name="model">crm.claim.time</field>
+            <field name="arch" type="xml">
+                <pivot string="Esfuerzo">
+                    <field name="categ_id" type="row"/>
+                    <field name="date" type="col"/>
+                    <field name="time" type="measure"/>
+                </pivot>
+            </field>
+        </record>
+
+        <record id="crm_claim_time_graph" model="ir.ui.view">
+            <field name="name">crm.claim.time.graph</field>
+            <field name="model">crm.claim.time</field>
+            <field name="arch" type="xml">
+                <graph>
+                    <field name="categ_id" type="row"/>
+                    <field name="date" type="col"/>
+                    <field name="time" type="meausure"/>
+                </graph>
+            </field>
+        </record>
+
+        <record id="crm_claim_time_search" model="ir.ui.view">
+            <field name="name">crm.claim.time.search</field>
+            <field name="model">crm.claim.time</field>
+            <field name="arch" type="xml">
+                <search string="Esfuerzo">
+                    <field name="claim_id"/>
+                    <field name="user_id"/>
+                    <field name="notes"/>
+                    <!--<field name="product_id"/>-->
+                    <field name="team_id"/>
+                    <field name="categ_id"/>
+                    <field name="partner_id"/>
+                    <field name="priority"/>
+                    <group expand="0" string="Group By">
+                        <filter string="Claim" domain="[]" help="Claim" context="{'group_by':'claim_id'}"/>
+                        <filter string="Partner" domain="[]" help="Partner" context="{'group_by':'partner_id'}"/>
+                        <filter string="Responsible" domain="[]" help="Responsible User" context="{'group_by':'user_id'}"/>
+                        <filter string="Stage" domain="[]" context="{'group_by':'stage_id'}"/>
+                        <filter string="Categoría" domain="[]" context="{'group_by':'categ_id'}"/>
+                        <filter string="Fecha" domain="[]" context="{'group_by':'date'}"/>
+                        <filter string="Equipo" domain="[]"  context="{'group_by':'team_id'}" />
+                        <filter string="Prioridad" domain="[]"  context="{'group_by':'priority'}" />
+                    </group>
+
+                </search>
+            </field>
+        </record>
+
+        <menuitem name="Esfuerzo de atención" id="menu_crm_claim_time"
+            parent="base.menu_sales" action="action_crm_claim_time" sequence="10"/>
+
+        <record id="crm_claim.crm_claim_category_claim0" model="ir.actions.act_window">
+            <field name="context">
+                {"stage_type":'claim'}
+            </field>
+        </record>
+    </data>
+</openerp>
+

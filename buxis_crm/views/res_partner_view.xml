@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<openerp>
+<data>
+
+       <record id="buxis_res_partner_view_inherit" model="ir.ui.view">
+            <field name="name">res.partner.form</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <field name="category_id" position="replace">
+                </field>
+
+                <xpath expr="//sheet/group/group[1]" position="before">
+                        <group string="Identificación">
+                            <field name="pais_nacimiento_id" options="{'no_create':True, 'no_open': True}" attrs="{'invisible':[('company_type','=','company')]}"/>
+                            <field name="pais_documento_id" options="{'no_create':True, 'no_open': True}" attrs="{'invisible':[('company_type','=','company')]}"/>
+                            <field name="tipo_documento_id" options="{'no_create':True, 'no_open': True}" attrs="{'invisible':[('company_type','=','company')]}" domain="[('country_id','=',pais_documento_id)]"/>
+                            <field name="nro_documento"/>
+                        </group>
+
+                        <group string="Otros">
+                            <field name="category_id" widget="many2many_tags" options="{'no_create': True, 'no_open': True}" placeholder="Tags..."/>
+                        </group>
+                </xpath>
+
+                <xpath expr="//field[@name='name']" position="replace">
+                        <field name="name" default_focus="1" placeholder="Name" attrs="{'invisible':[('company_type','=','person')], 'required' : [('company_type', '=', 'company')]}"/>
+                        <table>
+                            <tr>
+                                <th>
+                                    <field name="nombre" placeholder="Prim. nombre" attrs="{'invisible':[('company_type','=','company')], 'required' : [('company_type', '=', 'person')]}"/>
+                                    <field name="apellido" placeholder="Pri. apellido" attrs="{'invisible':[('company_type','=','company')], 'required' : [('company_type', '=', 'person')]}"/>
+
+                                </th>
+                                <th>
+                                    <field name="nombre2" placeholder="Seg. nombre" attrs="{'invisible':[('company_type','=','company')]}"/>
+                                    <field name="apellido2" placeholder="Seg. apellido" attrs="{'invisible':[('company_type','=','company')]}"/>
+                                </th>
+                            </tr>
+                        </table>
+                </xpath>
+
+                <xpath expr="//field[@name='city']" position="attributes">
+                    <attribute name="attrs">{'invisible':[('country_code','=','UY')]}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='city']" position="after">
+                    <field name="country_code" invisible="1"/>
+                </xpath>
+            </field>
+       </record>
+
+<!--
+       <record id="buxis_res_partner_view_inherit5" model="ir.ui.view">
+            <field name="name">res.partner.form.inherit5</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="sale.res_partner_view_buttons"/>
+            <field name="arch" type="xml">
+                <xpath expr="//button[1]" position="attributes">
+                    <attribute name="attrs">{'invisible':['|',('customer','=',True),('customer','=',False)]}</attribute>
+                </xpath>
+            </field>
+       </record>
+
+       <record id="buxis_res_partner_view_inherit6" model="ir.ui.view">
+            <field name="name">res.partner.form.inherit6</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="crm.view_partners_form_crm1"/>
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name=%(crm.crm_lead_opportunities)d]" position="attributes">
+                    <attribute name="attrs">{'invisible':[('customer','=',True),('customer','=',False)]}</attribute>
+                </xpath>
+            </field>
+       </record>
+
+       <record id="buxis_res_partner_view_inherit7" model="ir.ui.view">
+            <field name="name">res.partner.form.inherit7</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="crm_claim.view_claim_res_partner_info_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name=%(crm_claim.crm_claim_category_claim0)d]" position="attributes">
+                    <attribute name="groups"></attribute>
+                </xpath>
+            </field>
+       </record>
+
+        <record id="crm_claim.view_claim_res_partner_info_form" model="ir.ui.view">
+            <field name="groups_id" eval="[(5, False, False)]" />
+        </record>
+-->
+
+       <record id="buxis_res_partner_tree_view_inherit" model="ir.ui.view">
+            <field name="name">res.partner.tree</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='display_name']" position="after">
+                    <field name="tipo_documento_id" />
+                    <field name="nro_documento"/>
+                </xpath>
+            </field>
+       </record>
+
+       <record id="buxis_res_partner_search_view_inherit" model="ir.ui.view">
+            <field name="name">buxis.res.partner.search</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_res_partner_filter"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='user_id']" position="after">
+                   <field name="nro_documento"/>
+                </xpath>
+            </field>
+        </record>
+
+       <record id="crm_res_country_city_action" model="ir.actions.act_window">
+            <field name="name">Ciudades</field>
+            <field name="res_model">res.country.city</field>
+            <field name="view_mode">tree</field>
+        </record>
+
+       <record id="crm_tipo_doc_tree_view" model="ir.ui.view">
+            <field name="name">res.partner.tipo_doc.tree</field>
+            <field name="model">res.partner.tipo_doc</field>
+            <field name="arch" type="xml">
+                <tree editable="bottom">
+                    <field name="country_id"/>
+                    <field name="code"/>
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+       <record id="crm_tipo_doc_action" model="ir.actions.act_window">
+            <field name="name">Tipos de doc</field>
+            <field name="res_model">res.partner.tipo_doc</field>
+            <field name="view_mode">tree</field>
+        </record>
+
+       <record id="crm_res_country_city_tree_view" model="ir.ui.view">
+            <field name="name">res.country.city.tree</field>
+            <field name="model">res.country.city</field>
+            <field name="arch" type="xml">
+                <tree editable="bottom">
+                    <field name="name"/>
+                    <field name="country_id"/>
+                    <field name="state_id"/>
+                </tree>
+            </field>
+        </record>
+
+       <menuitem action="crm_res_country_city_action" name="Ciudades"
+            id="menu_crm_res_country_city" parent="base.menu_localisation" sequence="40" groups="base.group_no_one"/>
+
+       <menuitem action="crm_tipo_doc_action" name="Tipos de doc"
+            id="menu_tipo_doc" parent="base.menu_config_address_book" sequence="40" groups="base.group_no_one"/>
+
+    </data>
+</openerp>
