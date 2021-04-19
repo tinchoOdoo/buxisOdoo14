@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/buxisOdoo14.iml" filepath="$PROJECT_DIR$/.idea/buxisOdoo14.iml" />
+      <module fileurl="file://$USER_HOME$/odoo/odoo14c/odoo/.idea/odoo.iml" filepath="$USER_HOME$/odoo/odoo14c/odoo/.idea/odoo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../odooEnterprise14/.idea/odooEnterprise14.iml" filepath="$PROJECT_DIR$/../odooEnterprise14/.idea/odooEnterprise14.iml" />
+    </modules>
+  </component>
+</project>
