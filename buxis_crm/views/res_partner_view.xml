@@ -13,7 +13,6 @@
 
                 <xpath expr="//sheet/group/group[1]" position="before">
                         <group string="Identificación">
-                            <field name="pais_nacimiento_id" options="{'no_create':True, 'no_open': True}" attrs="{'invisible':[('company_type','=','company')]}"/>
                             <field name="pais_documento_id" options="{'no_create':True, 'no_open': True}" attrs="{'invisible':[('company_type','=','company')]}"/>
                             <field name="tipo_documento_id" options="{'no_create':True, 'no_open': True}" attrs="{'invisible':[('company_type','=','company')]}" domain="[('country_id','=',pais_documento_id)]"/>
                             <field name="nro_documento"/>
@@ -40,13 +39,14 @@
                             </tr>
                         </table>
                 </xpath>
-
+<!-- VER DE INCORPORAR ESTO
                 <xpath expr="//field[@name='city']" position="attributes">
                     <attribute name="attrs">{'invisible':[('country_code','=','UY')]}</attribute>
                 </xpath>
                 <xpath expr="//field[@name='city']" position="after">
                     <field name="country_code" invisible="1"/>
                 </xpath>
+                -->
             </field>
        </record>
 
