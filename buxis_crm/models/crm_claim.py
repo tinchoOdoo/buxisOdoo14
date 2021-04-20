@@ -148,7 +148,6 @@ class crm_claim(models.Model):
 
         return obj
 
-    @api.multi
     def write(self, vals):
         #_logger.warning(u'=====================================> 4')
         if 'partner_id' in vals:
@@ -187,7 +186,6 @@ class crm_claim(models.Model):
 
         return res
 
-    @api.multi
     def _check_can_edit(self):
         #_logger.warning(u'=====================================> 5')
         for claim in self:
@@ -275,7 +273,6 @@ class crm_claim(models.Model):
     #            claim.select_team_ids = [(6, 0, self._get_default_teams() or [-1])]
 
 
-    @api.one
     def _get_select_category_ids(self):
         #_logger.warning(u'=====================================> 12')
         self.select_category_ids = self._get_default_category_ids()
@@ -300,7 +297,6 @@ class crm_claim(models.Model):
         #        delegate_teams |= restrict.to_team_id
         return delegate_teams.ids
 
-    @api.multi
     @api.depends('time_ids','time_ids.time')
     def compute_tiempo_efectivo(self):
         #_logger.warning(u'=====================================> 16')
@@ -318,7 +314,6 @@ class crm_claim(models.Model):
     #        res['arch'] = etree.tostring(doc)
     #    return res
 
-    @api.multi
     def get_email_from(self):
         #_logger.warning(u'=====================================> 18')
         self.ensure_one()
@@ -326,7 +321,6 @@ class crm_claim(models.Model):
             return self.email_from.split('<')[-1].split('>')[0]
         return False
 
-    @api.multi
     @api.returns('self', lambda value: value.id)
     def message_post(self, body='', subject=None, message_type='notification',
                      subtype=None, parent_id=False, attachments=None,
@@ -392,7 +386,6 @@ class crm_claim_time(models.Model):
         res['team_id']=self.env.user.sale_team_id and self.env.user.sale_team_id.id or False
         return res
 
-    @api.multi
     @api.depends('user_id')
     def compute_can_edit_time(self):
         for row in self:
@@ -417,7 +410,6 @@ class crm_claim_time(models.Model):
 class MailComposer(models.TransientModel):
     _inherit = 'mail.compose.message'
 
-    @api.multi
     def get_mail_values(self, res_ids):
         results = super(MailComposer, self).get_mail_values(res_ids)
         if self.model == 'crm.claim' and not self.is_log:

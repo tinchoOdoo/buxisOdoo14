@@ -120,7 +120,6 @@ class res_partner(models.Model):
     def onchange_pais_tipo_doc(self):
         self.tipo_documento_id = False
 
-    @api.multi
     def write(self, vals):
         #Valido al Guardar el nro documento
         if 'nro_documento' in vals or 'tipo_documento_id' in vals:

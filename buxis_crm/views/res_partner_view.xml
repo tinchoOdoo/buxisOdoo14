@@ -147,12 +147,12 @@
                 </tree>
             </field>
         </record>
-
+<!-- Falta ver el menú parent
        <menuitem action="crm_res_country_city_action" name="Ciudades"
             id="menu_crm_res_country_city" parent="base.menu_localisation" sequence="40" groups="base.group_no_one"/>
 
        <menuitem action="crm_tipo_doc_action" name="Tipos de doc"
             id="menu_tipo_doc" parent="base.menu_config_address_book" sequence="40" groups="base.group_no_one"/>
-
+-->
     </data>
 </openerp>
