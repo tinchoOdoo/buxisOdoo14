@@ -28,12 +28,12 @@
                         </group>
                          <group>
                              <field name="create_date" invisible="1"/>
-                             <field name="select_team_ids" invisible="1"/>
+                             <!--<field name="select_team_ids" invisible="1"/> -->
                              <!-- <field name="select_teams_cnt" invisible="1"/> -->
                              <field name="team_id" string="Equipo de atención" options="{'no_create':True, 'no_open': True}"  attrs="{'readonly':['&amp;',('id','!=',False),('can_edit','=',False)]}"/>
                              <!--<field name="select_user_ids" invisible="1"/>
                              <field name="select_users_cnt" invisible="1"/>-->
-                             <field name="user_id" options="{'no_create':True, 'no_open': True}" domain="[('id','in',select_user_ids[0][2])]" attrs="{'readonly':['|',('team_id','=',False),'&amp;',('id','!=',False),('can_edit','=',False)]}"/>
+                             <!--<field name="user_id" options="{'no_create':True, 'no_open': True}" domain="[('id','in',select_user_ids[0][2])]" attrs="{'readonly':['|',('team_id','=',False),'&amp;',('id','!=',False),('can_edit','=',False)]}"/>-->
                          </group>
                      </group>
                  </xpath>
@@ -41,7 +41,7 @@
                     <attribute name="attrs">{'readonly':[('id','!=',False),('can_edit','=',False)]}</attribute>
                     <attribute name="domain">['|', ('team_ids', '=', team_id), ('case_default', '=', True)]</attribute>
                  </xpath>
-                <xpath expr="//field[@name='date_action_next']" position="attributes">
+                <!--<xpath expr="//field[@name='date_action_next']" position="attributes">
                     <attribute name="attrs">{'readonly':[('id','!=',False),('can_edit','=',False)]}</attribute>
                  </xpath>
                 <xpath expr="//field[@name='action_next']" position="attributes">
@@ -55,8 +55,8 @@
                  </xpath>
                 <xpath expr="//field[@name='resolution']" position="attributes">
                     <attribute name="attrs">{'readonly':[('id','!=',False),('can_edit','=',False)]}</attribute>
-                 </xpath>
-
+                 </xpath>-->
+<!--
                  <xpath expr="//page[1]" position="replace">
                     <page string="Caso">
                         <group>
@@ -78,6 +78,7 @@
 
                     </page>
                  </xpath>
+            -->
                  <xpath expr="//field[@name='write_date']" position="after">
                         <field name="fecha_cierre" attrs="{'readonly':[('id','!=',False),('can_edit','=',False)]}"/>
                         <field name="tiempo_efectivo" readonly="1" widget="float_time"/>
@@ -107,11 +108,13 @@
        <record id="make_invisible" model="res.groups">
             <field name="name">Invisible</field>
          </record>
-
+<!--
        <record model="ir.ui.menu" id="sales_team.menu_sales_team_act">
             <field name="groups_id" eval="[(6,0,[ref('make_invisible')])]"/>
         </record>
+-->
 
+<!--
        <record model="ir.ui.view" id="crm_claim_tree_prioridad">
             <field name="name">CRM - Claims Tree</field>
             <field name="model">crm.claim</field>
@@ -123,12 +126,16 @@
                 <field name="name" position="before">
                     <field name="team_id"/>
                 </field>
+
+                Volver a comentar
                 <field name="action_next" position="after">
                     <field name="priority"/>
                     <field name="tiempo_efectivo" widget="float_time"/>
                 </field>
+
             </field>
         </record>
+-->
 
        <record id="cedula_search" model="ir.ui.view">
             <field name="name">CRM - Claims Search</field>
@@ -314,9 +321,11 @@
             <field name="view_id" ref="buxis_claim_view"/>
             <field name="act_window_id" ref="crm_claim_category_claim_filtered"/>
         </record>
-
+<!-- Buscar para menu sales
         <menuitem name="Claims" id="crm_claim.menu_crm_case_claims"
                   parent="base.menu_sales" action="crm_claim_category_claim_filtered" sequence="7"/>
+-->
+
 <!--
         <record model="ir.actions.act_window" id="crm_claim_category_claim_clientes_filtered">
             <field name="name">Claims</field>
@@ -371,13 +380,15 @@
 
 
        <!-- Acomodar menues de reclamaciones -->
-       <menuitem id="base.menu_aftersale" name="After-Sale"
+<!--       <menuitem id="base.menu_aftersale" name="After-Sale"
             groups="base.group_no_one"
             parent="base.menu_base_partner" sequence="5" />
-
+-->
+<!--  buscar menu_sales
        <menuitem id="base.menu_services" name="Reclamaciones"
             groups="base.group_sale_salesman"
             parent="base.menu_sales" sequence="7" />
+-->
 
         <record id="crm_claim_forma_contacto_tree" model="ir.ui.view">
             <field name="name">crm.claim.forma_contacto.tree</field>
@@ -447,7 +458,7 @@
                 </graph>
             </field>
         </record>
-
+<!-- REDEFINIRLA
         <record id="crm_claim_time_search" model="ir.ui.view">
             <field name="name">crm.claim.time.search</field>
             <field name="model">crm.claim.time</field>
@@ -455,9 +466,9 @@
                 <search string="Esfuerzo">
                     <field name="claim_id"/>
                     <field name="user_id"/>
-                    <field name="notes"/>
+                    <field name="notes"/>-->
                     <!--<field name="product_id"/>-->
-                    <field name="team_id"/>
+                 <!--   <field name="team_id"/>
                     <field name="categ_id"/>
                     <field name="partner_id"/>
                     <field name="priority"/>
@@ -475,10 +486,11 @@
                 </search>
             </field>
         </record>
-
+-->
+<!--  buscar menu_sales
         <menuitem name="Esfuerzo de atención" id="menu_crm_claim_time"
             parent="base.menu_sales" action="action_crm_claim_time" sequence="10"/>
-
+-->
         <record id="crm_claim.crm_claim_category_claim0" model="ir.actions.act_window">
             <field name="context">
                 {"stage_type":'claim'}
