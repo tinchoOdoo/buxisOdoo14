@@ -203,7 +203,7 @@ class crm_claim(models.Model):
         if not partner_id:
             return {'value': vals}
         #partner = self.pool.get('res.partner').browse(cr, uid, partner_id, context=context)
-        partner = self.pool.get('res.partner').browse()
+        partner = self.pool.get('res.partner').browse(self)
         vals['partner_phone'] = partner.phone
         vals['partner_parent_id'] = partner.parent_id
         vals['partner_mobile'] = partner.mobile
