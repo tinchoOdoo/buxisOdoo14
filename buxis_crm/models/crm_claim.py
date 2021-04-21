@@ -192,14 +192,18 @@ class crm_claim(models.Model):
             claim.can_edit= claim.team_id and len([member for member in claim.team_id.member_ids if member==self.env.user])>0 or False
 
     @api.onchange('partner_id')
-    def onchange_partner_id(self, cr, uid, ids, partner_id, context=None):
+    def onchange_partner_id(self):
+    #def onchange_partner_id(self, cr, uid, ids, partner_id, context=None):
         #_logger.warning(u'=====================================> Se ejecuta onchange')
 
         vals = {'partner_parent_id': False, 'partner_mobile': False, 'partner_phone': False, 'email_form': False, 'tipo_doc_contacto': False, 'nro_doc_contacto': False}
         doms = {}
+        partner_id = self.partner_id
+
         if not partner_id:
             return {'value': vals}
-        partner = self.pool.get('res.partner').browse(cr, uid, partner_id, context=context)
+        #partner = self.pool.get('res.partner').browse(cr, uid, partner_id, context=context)
+        partner = self.pool.get('res.partner').browse()
         vals['partner_phone'] = partner.phone
         vals['partner_parent_id'] = partner.parent_id
         vals['partner_mobile'] = partner.mobile
