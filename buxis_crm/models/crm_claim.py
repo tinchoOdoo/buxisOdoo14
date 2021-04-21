@@ -12,6 +12,7 @@ _logger=logging.getLogger(__name__)
 
 class crm_claim_forma_contacto(models.Model):
     _name = 'crm.claim.forma_contacto'
+    _description = 'Claim Forma de Contacto'
 
     name = fields.Char('Forma contacto', required=True)
     code = fields.Char('Código', required=True)
@@ -19,6 +20,7 @@ class crm_claim_forma_contacto(models.Model):
 
 class crm_claim_tag(models.Model):
     _name = 'crm.claim.tag'
+    _description = 'Claim Etiquetas'
 
     name = fields.Char('Nombre', required=True)
 
@@ -96,7 +98,7 @@ class crm_claim(models.Model):
     partner_phone= fields.Char(related='partner_id.phone', string=u"Teléfono", readonly=True, store=False, compute_sudo=True)
     partner_mobile = fields.Char(related='partner_id.mobile', string=u"Celular", readonly=True, store=False, compute_sudo=True)
     partner_parent_id = fields.Many2one(related='partner_id.parent_id', string=u"Empresa", store=True)
-    forma_contacto_id= fields.Many2one('crm.claim.forma_contacto', string="Forma Contacto", required=True)
+    forma_contacto_id= fields.Many2one('crm.claim.forma_contacto', string="Forma Contacto") #, required=True)
     tag_ids= fields.Many2many('crm.claim.tag', string="Etiquetas")
     causas= fields.Char(string="Causas principales")
     fecha_cierre= fields.Date(string="Fecha de cierre")
@@ -366,6 +368,7 @@ class crm_claim(models.Model):
 # Tiempo efectivo dedicado a la resolución
 class crm_claim_time(models.Model):
     _name='crm.claim.time'
+    _description = 'Claim Tiempo'
 
     claim_id = fields.Many2one('crm.claim', 'Reclamación', required=True, ondelete='cascade')
     team_id = fields.Many2one('crm.team', 'Equipo')

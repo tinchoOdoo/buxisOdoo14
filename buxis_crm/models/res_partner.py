@@ -11,6 +11,7 @@ from odoo.tools.translate import _
 
 class res_partner_tipo_doc(models.Model):
     _name='res.partner.tipo_doc'
+    _description = 'Tipos de documento'
 
     country_id= fields.Many2one('res.country', string= "País", required=True)
     name= fields.Char(string= "Nombre", required=True)
@@ -19,6 +20,7 @@ class res_partner_tipo_doc(models.Model):
 
 class res_country_city(models.Model):
     _name='res.country.city'
+    _description = 'Ciudades'
 
     country_id = fields.Many2one('res.country', string="País", required=True, default=lambda self: self.env['res.country'].search([('code','=','UY')]),)
     state_id= fields.Many2one('res.country.state', string="Departamento")
