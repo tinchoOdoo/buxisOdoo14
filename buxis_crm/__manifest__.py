@@ -20,7 +20,6 @@
     'data': [
         'views/res_partner_view.xml',
         'views/crm_claim_view.xml',
-
         'data/crm_claim_data.xml',
     ],
     'demo': [],
