@@ -29,9 +29,9 @@ class res_country_city(models.Model):
 class res_partner(models.Model):
     _inherit='res.partner'
 
-    nombre = fields.Char(string="Primer Nombre")
+    nombre = fields.Char(string="Primer Nombre", default="")
     nombre2 = fields.Char(string="Segundo Nombre")
-    apellido = fields.Char(string="Primer Apellido")
+    apellido = fields.Char(string="Primer Apellido", default="")
     apellido2 = fields.Char(string="Segundo Apellido")
     pais_documento_id = fields.Many2one('res.country', string=u"País del documento", default=lambda self: self.env['res.country'].search([('code','=','UY')]),)
     tipo_documento_id = fields.Many2one('res.partner.tipo_doc', string ="Tipo de documento")

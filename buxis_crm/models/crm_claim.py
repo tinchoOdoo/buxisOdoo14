@@ -94,7 +94,7 @@ class crm_claim(models.Model):
                     self.message_subscribe([partner.id])
 
 
-    partner_id= fields.Many2one(track_visibility='onchange')
+    partner_id= fields.Many2one(tracking=True)
     partner_phone= fields.Char(related='partner_id.phone', string=u"Teléfono", readonly=True, store=False, compute_sudo=True)
     partner_mobile = fields.Char(related='partner_id.mobile', string=u"Celular", readonly=True, store=False, compute_sudo=True)
     partner_parent_id = fields.Many2one(related='partner_id.parent_id', string=u"Empresa", store=True)
@@ -111,10 +111,10 @@ class crm_claim(models.Model):
     select_users_cnt = fields.Integer(string='Select users cnt', compute="_get_select_user_ids" )
     select_user_ids_txt = fields.Text(compute="_get_select_user_ids", string="Users to select from")
     select_category_ids= fields.Many2many('crm.claim.category', compute="_get_select_category_ids", string="Categories to select from")
-    team_id= fields.Many2one('crm.team', 'Equipo de atención', oldname='section_id', select=True, track_visibility='onchange', help="Responsible sales team. Define Responsible user and Email account for mail gateway.", required=True)
-    name=fields.Char('Claim Subject', required=True, track_visibility='onchange', size=100)
+    team_id= fields.Many2one('crm.team', 'Equipo de atención', oldname='section_id', select=True, tracking=True, help="Responsible sales team. Define Responsible user and Email account for mail gateway.", required=True)
+    name=fields.Char('Claim Subject', required=True, tracking=True, size=100)
 
-    stage_id = fields.Many2one('crm.claim.stage', 'Stage', track_visibility='onchange', domain=[])
+    stage_id = fields.Many2one('crm.claim.stage', 'Stage', tracking=True, domain=[])
     time_ids = fields.One2many('crm.claim.time', 'claim_id', 'Tiempos')
     notificado = fields.Boolean('Contacto notificado')
 
