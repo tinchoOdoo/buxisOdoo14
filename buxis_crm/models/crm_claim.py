@@ -111,7 +111,10 @@ class crm_claim(models.Model):
     select_users_cnt = fields.Integer(string='Select users cnt', compute="_get_select_user_ids" )
     select_user_ids_txt = fields.Text(compute="_get_select_user_ids", string="Users to select from")
     select_category_ids= fields.Many2many('crm.claim.category', compute="_get_select_category_ids", string="Categories to select from")
-    team_id= fields.Many2one('crm.team', 'Equipo de atención', oldname='section_id', select=True, tracking=True, help="Responsible sales team. Define Responsible user and Email account for mail gateway.", required=True)
+    #team_id= fields.Many2one('crm.team', 'Equipo de atención', oldname='section_id', select=True, tracking=True, help="Responsible sales team. Define Responsible user and Email account for mail gateway.", required=True)
+    team_id = fields.Many2one('crm.team', 'Equipo de atención', tracking=True,
+                              help="Responsible sales team. Define Responsible user and Email account for mail gateway.",
+                              required=True)
     name=fields.Char('Claim Subject', required=True, tracking=True, size=100)
 
     stage_id = fields.Many2one('crm.claim.stage', 'Stage', tracking=True, domain=[])
