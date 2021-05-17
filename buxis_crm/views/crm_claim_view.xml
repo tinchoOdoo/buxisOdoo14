@@ -58,7 +58,6 @@
                             <group string="Solicitante">
                                 <field name="partner_id" string="Contacto" on_change="onchange_partner_id(partner_id)" options="{'no_create': True}" attrs="{'readonly':[('id','!=',False),('can_edit','=',False)]}"/>
                                 <field name="partner_parent_id" readonly="1" attrs="{'invisible':[('partner_parent_id','=',False)]}"/>
-                                <field name="partner_mobile" readonly="1"/>
                                 <field name="email_from" readonly="1"/>
                             </group>
                             <group string="Clasificación">

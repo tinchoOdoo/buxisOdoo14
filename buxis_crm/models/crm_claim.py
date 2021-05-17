@@ -103,8 +103,6 @@ class crm_claim(models.Model):
     causas= fields.Char(string="Causas principales")
     fecha_cierre= fields.Date(string="Fecha de cierre")
     tiempo_efectivo= fields.Float(string="Esfuerzo (hs)", compute='compute_tiempo_efectivo', store=True)
-    tipo_doc_contacto= fields.Char(related='partner_id.tipo_doc_code', string="Tipo doc", readonly=True)
-    nro_doc_contacto= fields.Char(related='partner_id.nro_documento', string="Nro doc",readonly=True)
     email_from= fields.Text(string="Mail")
     can_edit = fields.Boolean(compute='_check_can_edit', string="Can Edit")
     select_user_ids = fields.Many2many('res.users', compute="_get_select_user_ids", string="Users to select from")
@@ -209,7 +207,6 @@ class crm_claim(models.Model):
             return {'value': vals}
         #partner = self.pool.get('res.partner').browse(cr, uid, partner_id, context=context)
         partner = self.pool.get('res.partner').browse(self)
-        vals['partner_phone'] = partner.phone
         vals['partner_parent_id'] = partner.parent_id
         vals['partner_mobile'] = partner.mobile
         vals['partner_phone'] = partner.phone
@@ -217,8 +214,7 @@ class crm_claim(models.Model):
             vals['email_from'] = "\n".join(partner.email.split(","))
         else:
             vals['email_from'] = False
-        vals['tipo_doc_contacto'] = partner.tipo_doc_code
-        vals['nro_doc_contacto'] = partner.nro_documento
+
         return {'value': vals }
 
     @api.depends('team_id')
