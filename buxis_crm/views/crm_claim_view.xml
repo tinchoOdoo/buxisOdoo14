@@ -140,19 +140,19 @@
                 </xpath>
                 <field name="user_id" position="after">
                     <field name="id"/>
-                    <field name="nro_doc_contacto"/>
                     <field name="team_id"/>
                     <field name="stage_id"/>
                 </field>
             </field>
         </record>
 
+        <!--
        <record id="buxis_claim_clientes_view" model="ir.ui.view">
            <field name="name">buxis.crm.claim.clientes.form</field>
            <field name="model">crm.claim</field>
-           <field name="mode">primary</field>
+           <field name="mode">primary</field>-->
            <!--<field name="inherit_id" ref="buxis_claim_view"/>-->
-           <field name="inherit_id" ref="crm_claim.crm_case_claims_form_view"/>
+   <!--        <field name="inherit_id" ref="crm_claim.crm_case_claims_form_view"/>
            <field name="arch" type="xml">
                 <xpath expr="//field[@name='team_id']" position="attributes">
                     <attribute name="attrs">{'readonly':True}</attribute>
@@ -164,8 +164,7 @@
 
                <xpath expr="//page[last()]" position="replace">
                </xpath>
-
-<!--                 <xpath expr="//group[1]" position="replace"/>
+                <xpath expr="//group[1]" position="replace"/>
                  <xpath expr="//group[1]" position="replace"/>
                  <xpath expr="//group[1]" position="before">
                      <group>
@@ -258,8 +257,8 @@
                          </field>
                      </page>
                  </xpath>-->
-            </field>
-        </record>
+ <!--           </field>
+        </record>-->
 
 <!--
        <record id="buxis_ventas_view" model="ir.ui.view">
