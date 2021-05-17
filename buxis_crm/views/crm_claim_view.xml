@@ -14,14 +14,8 @@
                         <group>
                             <field name="id" readonly="1"/>
                             <field name="can_edit" invisible="1"/>
-                            <!--<field name="select_category_ids" invisible="1" />
-                            <field name="select_subcategory_ids" invisible="1" />-->
+                            <!--<field name="select_category_ids" invisible="1" />-->
                             <field name="categ_id" attrs="{'readonly':[('id','!=',False),('can_edit','=',False)]}" options="{'no_create': True}"/>
-                            <!--<field name="sub_categoria_id" domain="[('category_id','=',categ_id),('id','in',select_subcategory_ids[0][2])]" attrs="{'readonly':['|',('select_subcategory_ids','=',False),'&amp;',('id','!=',False),('can_edit','=',False)]}" options="{'no_create': True}"/>-->
-                            <!--<field name="campo_tipo_trabajo" invisible="1"/>
-                            <field name="tipo_trabajo_id" attrs="{'readonly':[('id','!=',False),('can_edit','=',False)],'invisible':[('campo_tipo_trabajo','=',False)], 'required':[('campo_tipo_trabajo','=',True)]}" options="{'no_create': True}"/>
-                            <field name="campo_severidad" invisible="1"/>
-                            <field name="severidad_id" attrs="{'readonly':[('id','!=',False),('can_edit','=',False)],'invisible':[('campo_severidad','=',False)], 'required':[('campo_severidad','=',True)]}" options="{'no_create': True}"/>-->
                             <field name="name" attrs="{'readonly':[('id','!=',False),('can_edit','=',False)]}"/>
                             <field name="date" attrs="{'readonly':[('id','!=',False),('can_edit','=',False)]}"/>
                             <field name="priority" attrs="{'readonly':[('id','!=',False),('can_edit','=',False)]}"/>
@@ -34,6 +28,7 @@
                              <!--<field name="select_user_ids" invisible="1"/>
                              <field name="select_users_cnt" invisible="1"/>-->
                              <!--<field name="user_id" options="{'no_create':True, 'no_open': True}" domain="[('id','in',select_user_ids[0][2])]" attrs="{'readonly':['|',('team_id','=',False),'&amp;',('id','!=',False),('can_edit','=',False)]}"/>-->
+                             <field name="user_id" options="{'no_create':True, 'no_open': True}" attrs="{'readonly':['|',('team_id','=',False),'&amp;',('id','!=',False),('can_edit','=',False)]}"/>
                          </group>
                      </group>
                  </xpath>
@@ -56,7 +51,7 @@
                 <xpath expr="//field[@name='resolution']" position="attributes">
                     <attribute name="attrs">{'readonly':[('id','!=',False),('can_edit','=',False)]}</attribute>
                  </xpath>-->
-<!--
+
                  <xpath expr="//page[1]" position="replace">
                     <page string="Caso">
                         <group>
@@ -78,7 +73,6 @@
 
                     </page>
                  </xpath>
-            -->
                  <xpath expr="//field[@name='write_date']" position="after">
                         <field name="fecha_cierre" attrs="{'readonly':[('id','!=',False),('can_edit','=',False)]}"/>
                         <field name="tiempo_efectivo" readonly="1" widget="float_time"/>
