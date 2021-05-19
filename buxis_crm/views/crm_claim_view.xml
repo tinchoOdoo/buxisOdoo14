@@ -479,10 +479,10 @@
             </field>
         </record>
 -->
-<!--  buscar menu_sales
+
         <menuitem name="Esfuerzo de atención" id="menu_crm_claim_time"
-            parent="base.menu_sales" action="action_crm_claim_time" sequence="10"/>
--->
+            parent="crm_claim.menu_aftersale" action="action_crm_claim_time" sequence="10"/>
+
         <record id="crm_claim.crm_claim_category_claim0" model="ir.actions.act_window">
             <field name="context">
                 {"stage_type":'claim'}

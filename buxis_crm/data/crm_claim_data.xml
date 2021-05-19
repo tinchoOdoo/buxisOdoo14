@@ -27,6 +27,16 @@
             <field name="perm_write" eval="True"/>
         </record>
 
+        <record id="crm_claim_forma_contacto_security" model="ir.model.access">
+            <field name="name">crm.claim.forma.contacto</field>
+            <field name="model_id" ref="buxis_crm.model_crm_claim_forma_contacto"/>
+            <field name="group_id" ref="sales_team.group_sale_manager"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+            <field name="perm_write" eval="True"/>
+        </record>
+
         <record id="email_template_aviso_asignacion_reclamo" model="mail.template">
             <field name="name">Aviso asignación reclamo</field>
             <field name="model_id" ref="crm_claim.model_crm_claim"/>
