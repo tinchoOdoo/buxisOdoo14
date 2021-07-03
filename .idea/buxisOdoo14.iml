@@ -6,6 +6,7 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="odoo" />
     <orderEntry type="module" module-name="odooEnterprise14" />
+    <orderEntry type="module" module-name="design-themes" />
   </component>
   <component name="PyDocumentationSettings">
     <option name="format" value="PLAIN" />
