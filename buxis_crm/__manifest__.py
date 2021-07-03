@@ -3,7 +3,7 @@
 
 {
     'name': 'BUXIS CRM',
-    'version': '1.0',
+    'version': '1.1',
     'category': 'Sales',
     'summary': 'Leads, Opportunities, Activities',
     'description': """Modificaciones a Odoo para Buxis
@@ -21,6 +21,7 @@
         'views/res_partner_view.xml',
         'views/crm_claim_view.xml',
         'data/crm_claim_data.xml',
+        'security/crm_claim_security.xml',
     ],
     'demo': [],
     'test': [],
