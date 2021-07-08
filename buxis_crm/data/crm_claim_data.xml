@@ -59,6 +59,11 @@
             <field name="value">crm</field>
         </record>
 
+        <record id="crm_claim.menu_aftersalea" model="ir.ui.menu">
+            <field name="parent_id"/>
+            <field name="name">Gestiones</field>
+            <field name="web_icon_data">buxis_crm,static/description/helpdesk.png</field>
+        </record>
 
     </data>
 </openerp>
