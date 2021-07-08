@@ -62,7 +62,7 @@
         <record id="crm_claim.menu_aftersale" model="ir.ui.menu">
             <field name="parent_id"/>
             <field name="name">Gestiones</field>
-            <field name="web_icon_data">static/description/helpdesk.png</field>
+            <field name="web_icon_data" type="base64" file="base/static/img/country_flags/ax.png"></field>
         </record>
 
     </data>
