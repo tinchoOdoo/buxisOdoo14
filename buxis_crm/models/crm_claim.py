@@ -230,7 +230,7 @@ class crm_claim(models.Model):
             # Si no está definido el equipo, lista vacía
             else:
                 select_user_ids = []
-            s = ','.join(select_user_ids)
+            s = ','.join([str(usr.partner_id.id) for usr in select_user_ids if usr.partner_id])
             _logger.warning(u'Lista ===============================> ' + s)
             user_ids = select_user_ids and select_user_ids.ids or []
             _logger.warning(u'=====================================> 9.1')
