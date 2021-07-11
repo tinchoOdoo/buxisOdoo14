@@ -237,7 +237,7 @@ class crm_claim(models.Model):
             _logger.warning(u'=====================================> 9.2')
             s = ','.join(user_ids)
             _logger.warning(u'=====================================> 9.2.1 '+ s)
-            claim.select_user_ids = [(6, 0, user_ids or [-1])]
+            claim.select_user_ids = [(6, 0, user_ids or [])]
             _logger.warning(u'=====================================> 9.2')
             claim.select_user_ids_txt = ",".join([str(usr.partner_id.id) for usr in select_user_ids if usr.partner_id])
             if claim.user_id and claim.user_id.id not in user_ids:
