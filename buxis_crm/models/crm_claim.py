@@ -121,13 +121,15 @@ class crm_claim(models.Model):
 
     @api.model
     def default_get(self, fields):
-        #_logger.warning(u'=====================================> 1')
+        _logger.warning(u'=====================================> 1')
         res = super(crm_claim, self).default_get(fields)
 
-        #_logger.warning(u'=====================================> 2')
+        _logger.warning(u'=====================================> 2')
 
         res['select_category_ids']=self._get_default_category_ids()
-    
+
+        _logger.warning(u'=====================================> 2.2')
+
         #if self.env.user.sale_team_id.name == 'Clientes':
         #    res['partner_id'] = self.env.user.partner_id.id
         
@@ -135,7 +137,7 @@ class crm_claim(models.Model):
 
     @api.model
     def create(self, vals):
-        #_logger.warning(u'=====================================> 3')
+        _logger.warning(u'=====================================> 3')
         
         #interfaz_user=self.env.user.has_group('buxis_crm.Interfaz')
         #self_no_create=self.with_context(mail_create_nosubscribe=interfaz_user)
@@ -148,6 +150,8 @@ class crm_claim(models.Model):
         # Subscripción automática del contacto
         if obj.partner_id:
             obj.message_subscribe([obj.partner_id.id])
+
+        _logger.warning(u'=====================================> 3.3')
 
         return obj
 
@@ -190,7 +194,7 @@ class crm_claim(models.Model):
         return res
 
     def _check_can_edit(self):
-        #_logger.warning(u'=====================================> 5')
+        _logger.warning(u'=====================================> 5')
         for claim in self:
             claim.can_edit= claim.team_id and len([member for member in claim.team_id.member_ids if member==self.env.user])>0 or False
 
@@ -218,7 +222,7 @@ class crm_claim(models.Model):
 
     @api.depends('team_id')
     def _get_select_user_ids(self):
-        #_logger.warning(u'=====================================> 9')
+        _logger.warning(u'=====================================> 9')
         for claim in self:
             # definir lista como la lista de miembros del equipo
             if claim.team_id:
@@ -226,8 +230,15 @@ class crm_claim(models.Model):
             # Si no está definido el equipo, lista vacía
             else:
                 select_user_ids = []
+            s = ','.join(select_user_ids)
+            _logger.warning(u'Lista ===============================> ' + s)
             user_ids = select_user_ids and select_user_ids.ids or []
-            claim.select_user_ids = [(6, 0, user_ids or [-1])]
+            _logger.warning(u'=====================================> 9.1')
+            _logger.warning(u'=====================================> 9.2')
+            s = ','.join(user_ids)
+            _logger.warning(u'=====================================> 9.2.1 '+ s)
+            claim.select_user_ids = [(6, 0, user_ids or [])]
+            _logger.warning(u'=====================================> 9.2')
             claim.select_user_ids_txt = ",".join([str(usr.partner_id.id) for usr in select_user_ids if usr.partner_id])
             if claim.user_id and claim.user_id.id not in user_ids:
                 claim.user_id = False
@@ -235,7 +246,7 @@ class crm_claim(models.Model):
 
     @api.model
     def search(self, args, offset=0, limit=None, order=None, count=False):
-        #_logger.warning(u'=====================================> 10')
+        _logger.warning(u'=====================================> 10')
         context = self._context or {}
 
         if context.get('apply_team_filter'):
@@ -278,12 +289,12 @@ class crm_claim(models.Model):
 
 
     def _get_select_category_ids(self):
-        #_logger.warning(u'=====================================> 12')
+        _logger.warning(u'=====================================> 12')
         self.select_category_ids = self._get_default_category_ids()
 
     @api.model
     def _get_default_category_ids(self):
-        #_logger.warning(u'=====================================> 13')
+        _logger.warning(u'=====================================> 13')
         category_ids = []
 
         category_ids = self.env['crm.claim.category'].search([]).ids
@@ -291,7 +302,7 @@ class crm_claim(models.Model):
 
     @api.model
     def _get_default_teams(self):
-        #_logger.warning(u'=====================================> 14')
+        _logger.warning(u'=====================================> 14')
         # Si la reclamación aún no está creada, tomar como base los equipos a los que pertenece el usuario
         delegate_teams = self.env.user.sale_team_id | self.env['crm.team'].search([('user_id', '=', self.env.user.id)])
 
