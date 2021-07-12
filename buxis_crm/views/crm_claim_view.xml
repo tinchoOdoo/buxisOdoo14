@@ -27,8 +27,8 @@
                              <field name="team_id" string="Equipo de atención" options="{'no_create':True, 'no_open': True}"  attrs="{'readonly':['&amp;',('id','!=',False),('can_edit','=',False)]}"/>
                              <field name="select_user_ids" invisible="1"/>
                              <field name="select_users_cnt" invisible="1"/>
-                             <field name="user_id" options="{'no_create':True, 'no_open': True}" domain="[('id','in',select_user_ids and select_user_ids[0][2])]" attrs="{'readonly':['|',('team_id','=',False),'&amp;',('id','!=',False),('can_edit','=',False)]}"/>
-                             <!--<field name="user_id" options="{'no_create':True, 'no_open': True}" attrs="{'readonly':['|',('team_id','=',False),'&amp;',('id','!=',False),('can_edit','=',False)]}"/>-->
+                             <!--<field name="user_id" options="{'no_create':True, 'no_open': True}" domain="[('id','in',select_user_ids and select_user_ids[0][2])]" attrs="{'readonly':['|',('team_id','=',False),'&amp;',('id','!=',False),('can_edit','=',False)]}"/>-->
+                             <field name="user_id" options="{'no_create':True, 'no_open': True}" attrs="{'readonly':['|',('team_id','=',False),'&amp;',('id','!=',False),('can_edit','=',False)]}"/>
                          </group>
                      </group>
                  </xpath>
