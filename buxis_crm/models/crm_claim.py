@@ -309,7 +309,7 @@ class crm_claim(models.Model):
         _logger.warning(u'=====================================> 14')
         # Si la reclamación aún no está creada, tomar como base los equipos a los que pertenece el usuario
         #team_id = self.env.user.sale_team_id | self.env['crm.team'].search([('user_id', '=', self.env.user.id)])
-        team_id = self.env.user.sale_team_id | False
+        team_id = self.env.user.sale_team_id.id | False
 
 #        # Ver a que equipos se puede delegar desde los equipos base
 #        #for team in delegate_teams:
