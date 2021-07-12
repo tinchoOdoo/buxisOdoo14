@@ -127,6 +127,10 @@ class crm_claim(models.Model):
         _logger.warning(u'=====================================> 2')
 
         res['select_category_ids']=self._get_default_category_ids()
+        res['team_id'] = self._get_default_team()
+        
+        if not res['team_id']:
+            res['user_id'] = False
 
         _logger.warning(u'=====================================> 2.2')
 
@@ -236,7 +240,7 @@ class crm_claim(models.Model):
             _logger.warning(u'=====================================> 9.1')
             _logger.warning(u'=====================================> 9.2')
             s = ','.join([str(usr) for usr in user_ids if usr])
-            _logger.warning(u'=====================================> 9.2.1 '+ s)
+            _logger.warning(u'user_ids =====================================> 9.2.1 '+ s)
             claim.select_user_ids = [(6, 0, user_ids or [])]
             _logger.warning(u'=====================================> 9.2')
             claim.select_user_ids_txt = ",".join([str(usr.partner_id.id) for usr in select_user_ids if usr.partner_id])
@@ -301,16 +305,17 @@ class crm_claim(models.Model):
         return [(6, 0, category_ids or [-1])]
 
     @api.model
-    def _get_default_teams(self):
+    def _get_default_team(self):
         _logger.warning(u'=====================================> 14')
         # Si la reclamación aún no está creada, tomar como base los equipos a los que pertenece el usuario
-        delegate_teams = self.env.user.sale_team_id | self.env['crm.team'].search([('user_id', '=', self.env.user.id)])
+        #team_id = self.env.user.sale_team_id | self.env['crm.team'].search([('user_id', '=', self.env.user.id)])
+        team_id = self.env.user.sale_team_id | False
 
-        # Ver a que equipos se puede delegar desde los equipos base
-        #for team in delegate_teams:
-        #    for restrict in team.delegate_restrict_ids:
-        #        delegate_teams |= restrict.to_team_id
-        return delegate_teams.ids
+#        # Ver a que equipos se puede delegar desde los equipos base
+#        #for team in delegate_teams:
+#        #    for restrict in team.delegate_restrict_ids:
+#        #        delegate_teams |= restrict.to_team_id
+        return team_id.id
 
     @api.depends('time_ids','time_ids.time')
     def compute_tiempo_efectivo(self):
