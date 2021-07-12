@@ -128,7 +128,7 @@ class crm_claim(models.Model):
 
         res['select_category_ids']=self._get_default_category_ids()
         res['team_id'] = self._get_default_team()
-        
+
         if not res['team_id']:
             res['user_id'] = False
 
@@ -315,7 +315,7 @@ class crm_claim(models.Model):
 #        #for team in delegate_teams:
 #        #    for restrict in team.delegate_restrict_ids:
 #        #        delegate_teams |= restrict.to_team_id
-        return team_id.id
+        return team_id
 
     @api.depends('time_ids','time_ids.time')
     def compute_tiempo_efectivo(self):
