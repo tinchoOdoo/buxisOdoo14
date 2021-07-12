@@ -422,6 +422,7 @@ class crm_claim_time(models.Model):
             self.team_id = self.user_id.sale_team_id
         else:
             self.team_id=False
+        return self._get_select_user_ids()
 
     @api.constrains('user_id', 'team_id')
     def check_user_team(self):
